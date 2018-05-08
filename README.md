@@ -1,0 +1,1 @@
+Blueprint for Selenium tests using TestNG runner
