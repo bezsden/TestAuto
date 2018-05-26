@@ -5,6 +5,7 @@
 2. Maven 3 (added to path)
 3. Git client
 4. Your favourite IDE (IDEA, Eclipse, NetBeans)
+5. ChromeDriver added to path variable
 
 #### To run:
 <b>mvn clean test</b>

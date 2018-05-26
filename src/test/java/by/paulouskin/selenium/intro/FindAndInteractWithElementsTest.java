@@ -13,6 +13,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static by.paulouskin.selenium.intro.PhpTravelsSelectors.*;
+
 public class FindAndInteractWithElementsTest {
 
     private WebDriver wd;
@@ -25,12 +27,21 @@ public class FindAndInteractWithElementsTest {
 
     @Test
     public void FindElementByTagName() {
-
+        WebElement navigation_bar = wd.findElement(NAVIGATION_PANEL);
+        System.out.println(navigation_bar.getText());
+        WebElement page_header = wd.findElement(PAGE_HEADER);
+        System.out.println(page_header.getCssValue("box-sizing"));
     }
 
     @Test
     public void FindAndClickEnterTextCheckElementsTest() {
-
+        /*WebElement flight_tab = wd.findElement(NAVIGATION_PANEL)
+                .findElements(By.tagName("li"))
+                .stream()
+                .filter(we -> we.getText().equalsIgnoreCase("flights"))
+                .findFirst()
+                .get();
+        flight_tab.click();*/
     }
 
     @AfterMethod
