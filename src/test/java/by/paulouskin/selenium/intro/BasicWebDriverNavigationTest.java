@@ -1,5 +1,8 @@
 package by.paulouskin.selenium.intro;
 
+import org.hamcrest.MatcherAssert;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -9,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.assertEquals;
 
 public class BasicWebDriverNavigationTest {
@@ -31,9 +35,24 @@ public class BasicWebDriverNavigationTest {
     }
 
     @Test
-    public void FindElementsTest() {
-        assertEquals(true,true);
+    public void CookieManipulationTest() {
+       wd.manage().window().maximize();
+        Cookie cookie = new Cookie("SeleniumIntroductionCookie","SICookieValue");
+        wd.manage().addCookie(cookie);
+        System.out.println(wd.manage().getCookieNamed("SeleniumIntroductionCookie"));
+        wd.manage().deleteCookie(cookie);
+        MatcherAssert.assertThat(wd.manage().getCookieNamed("SeleniumIntroductionCookie"), is(nullValue()));
     }
+
+    @Test
+    public void JavascriptExecutionTest() {
+        JavascriptExecutor jse = (JavascriptExecutor) wd;
+        String title = (String)jse.executeScript("return document.title");
+        boolean jquery_loaded = (boolean) jse.executeScript("return jQuery.active == 0");
+        //MatcherAssert.assertThat(title, containsString("Etsy.com"));
+        MatcherAssert.assertThat(jquery_loaded, is(equalTo(true)));
+    }
+
 
     @AfterMethod
     public void tearDown() {
