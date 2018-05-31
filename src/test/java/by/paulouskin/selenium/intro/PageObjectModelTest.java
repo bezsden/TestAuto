@@ -23,11 +23,8 @@ public class PageObjectModelTest {
     @BeforeMethod
     public void setUp() {
         wd = new ChromeDriver();
-        wd.get("http://www.etsy.com");
         homePage = new EtsyComHomePage(wd);
-        new WebDriverWait(wd, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(GDPR_ALERT_WINDOW));
-        wd.findElement(By.xpath("/html/body/div[2]/div[1]/div[2]/div/div/div[2]/button")).click();
+
     }
     @Test
     public void SearchForItemAndApplySearchCriteria() {

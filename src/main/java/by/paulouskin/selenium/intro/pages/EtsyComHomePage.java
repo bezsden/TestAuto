@@ -1,20 +1,32 @@
 package by.paulouskin.selenium.intro.pages;
 
+import by.paulouskin.selenium.intro.LoadWebDriverProperties;
 import by.paulouskin.selenium.intro.pages.components.SearchFilterForm;
 import by.paulouskin.selenium.intro.pages.components.SearchResultTable;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class EtsyComHomePage {
+import static by.paulouskin.selenium.intro.EtsyComSelectors.GDPR_ALERT_WINDOW;
+
+public class EtsyComHomePage extends LoadableComponent<EtsyComHomePage>{
 
     private WebDriver webDriver;
 
     private SearchFilterForm filterForm;
     private SearchResultTable searchResultTable;
+
+    private static final By SIGN_IN = By.cssSelector("#sign-in");
+
+    private final int WAIT_FOR_PAGE_LOAD_PERIOD = 60;
 
     @FindBy(css = "div.search-button-wrapper")
     private WebElement searchButton;
@@ -26,6 +38,10 @@ public class EtsyComHomePage {
         PageFactory.initElements(webDriver,this);
         filterForm = new SearchFilterForm(webDriver);
         searchResultTable = new SearchResultTable(webDriver);
+        webDriver.get(LoadWebDriverProperties.loadPropertiesFromFile("run.properties").get("target_address"));
+        new WebDriverWait(webDriver, 10)
+                .until(ExpectedConditions.visibilityOfElementLocated(GDPR_ALERT_WINDOW));
+        webDriver.findElement(By.xpath("/html/body/div[2]/div[1]/div[2]/div/div/div[2]/button")).click();
     }
 
 
@@ -58,5 +74,27 @@ public class EtsyComHomePage {
 
     public List<String> getAppliedSearchFilters() {
         return searchResultTable.getAppliedSearchFilters();
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        if(!etsyComPageLoaded(webDriver)) {
+            throw new Error("Page have not been loaded in time(");
+        }
+    }
+
+    private boolean etsyComPageLoaded(WebDriver webDriver) {
+        try {
+            new WebDriverWait(webDriver, WAIT_FOR_PAGE_LOAD_PERIOD)
+                    .until(ExpectedConditions.visibilityOfElementLocated(SIGN_IN));
+        } catch (WebDriverException ex) {
+            return false;
+        }
+        return true;
     }
 }
