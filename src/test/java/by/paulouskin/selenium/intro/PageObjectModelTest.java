@@ -2,18 +2,13 @@ package by.paulouskin.selenium.intro;
 
 import by.paulouskin.selenium.intro.pages.EtsyComHomePage;
 import org.hamcrest.MatcherAssert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static by.paulouskin.selenium.intro.EtsyComSelectors.GDPR_ALERT_WINDOW;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class PageObjectModelTest {
 
@@ -28,7 +23,8 @@ public class PageObjectModelTest {
     }
     @Test
     public void SearchForItemAndApplySearchCriteria() {
-        homePage.searchForItem("leather bag");
+        String searchCrit = "leather bag";
+        homePage.searchForItem(searchCrit);
         homePage.selectSpecialOffersFilter("On sale");
         homePage.selectShippingOptions("Free shipping");
         homePage.selectItemType("Handmade");
