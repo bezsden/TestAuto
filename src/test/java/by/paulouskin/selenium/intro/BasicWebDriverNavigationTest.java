@@ -22,6 +22,7 @@ public class BasicWebDriverNavigationTest {
 
     @BeforeMethod
     public void setUp(){
+    System.setProperty("webdriver.chrome.driver","D:\\java_practice\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         //options.setHeadless(true);
         options.setAcceptInsecureCerts(false);

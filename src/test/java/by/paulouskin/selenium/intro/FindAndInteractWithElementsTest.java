@@ -33,16 +33,18 @@ public class FindAndInteractWithElementsTest {
 
     @BeforeMethod
     public void setUp() {
+        System.setProperty("webdriver.chrome.driver","D:\\java_practice\\chromedriver.exe");
         wd = new ChromeDriver();
         wd.get("http://www.etsy.com");
-        new WebDriverWait(wd, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(GDPR_ALERT_WINDOW));
-        wd.findElement(By.xpath("/html/body/div[2]/div[1]/div[2]/div/div/div[2]/button")).click();
+      //  new WebDriverWait(wd, 10)
+       //         .until(ExpectedConditions.visibilityOfElementLocated(GDPR_ALERT_WINDOW));
+       // wd.findElement(By.xpath("/html/body/div[2]/div[1]/div[2]/div/div/div[2]/button")).click();
         wd.manage().window().maximize();
     }
 
     @Test
     public void FindElementByTagName() {
+        System.setProperty("webdriver.chrome.driver","D:\\java_practice\\chromedriver.exe");
         WebElement search_field = wd.findElement(SEARCH_FIELD);
         search_field.clear();
         search_field.sendKeys("Leather bag");
