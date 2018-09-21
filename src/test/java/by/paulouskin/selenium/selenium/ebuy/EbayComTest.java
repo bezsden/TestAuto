@@ -15,25 +15,29 @@ public class EbayComTest {
     EbayComPageObject ebayPage;
 
     @BeforeAll
-    public void setUpAll(){
+    public static void setUpAll(){
     webDriver = new ChromeDriver();
     }
     @BeforeEach
-    public void setUp(){
+    public   void setUp(){
         ebayPage = new EbayComPageObject(webDriver);
     }
     @Test
     public void shouldShowBestPriceWhenSelectAuctionAfterSearch(){
-        EbayComPageObject ebayPage = new EbayComPageObject(webDriver);
+       // EbayComPageObject ebayPage = new EbayComPageObject(webDriver);
         ebayPage.goToMainPage()
                 .searchFor("leather bags")
                 .selectActionItems();
         assertThat(ebayPage.getAuctionBestPrices(),
-                containsInAnyOrder("Under $8.00", "$8.00 - $18.00")) ;
+             containsInAnyOrder("Under $8.00", "$8.00 - $18.00", "Over $18.00")
+      ) ;
      }
 
-     @AfterEach
+   //  @AfterEach
 
     @AfterAll
+    public static  void tearDown(){
+        webDriver.quit();
+    }
 
 }
