@@ -33,7 +33,18 @@ public class EbayComTest {
       ) ;
      }
 
-   //  @AfterEach
+
+
+    @Test
+    public void shouldShowBestPriceWhenSelectAuctionAfterSearchAfterSelectingItemsInAdditionalCategory(){
+        ebayPage.goToMainPage()
+                .selectItemsInAdditionalCategoryForCategory("PC Gaming","Electronics")
+                .selectActionItems();
+        assertThat(ebayPage.getAuctionBestPrices(),
+                containsInAnyOrder("Under $8.00", "$8.00 - $18.00", "Over $18.00")
+        ) ;
+    }
+
 
     @AfterAll
     public static  void tearDown(){

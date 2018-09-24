@@ -3,6 +3,8 @@ package by.paulouskin.selenium.selenium.ebuy.pageobject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -59,5 +61,20 @@ public class EbayComPageObject extends BasePageObject{
                 .map(webElement -> webElement.getText())
                 .collect(Collectors.toList());
     }
+  public EbayComPageObject selectItemsInAdditionalCategoryForCategory (
+          String subCategory,
+          String category   ) {
+      Actions builder = new Actions(webDriver);
+      //Action clickDoubleClickMoveAction = builder.click().doubleClick().build();
+      String xpathSel = String.format("//a[contains(text(),'$s'", category);
+      String xpathSelCat = String.format("//a[contains(text(),'$s'", subCategory);
+      WebElement categoryItem = findElementWithWait(By.xpath(xpathSel));
+      Action ourComplexBuilder = builder.moveToElement(categoryItem).click().build();
+      ourComplexBuilder.perform();
+
+      return this;
+      // //div[@class='topnav']
+      // class cat for td
+  }
 
 }
